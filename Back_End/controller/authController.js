@@ -15,6 +15,12 @@ const signup = async (req, res) => {
         message: "Every Field id Required ❌",
       });
     }
+    // if (name == isdigit) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Username must be only Character ❌"
+    //   });
+    // }
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
