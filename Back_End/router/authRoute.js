@@ -1,16 +1,22 @@
 const express = require("express");
-const {
-  signup,
-  signin,
-  getuser,
-  logout,
-} = require("../controller/authController");
-const jwtAuth = require("../middleware/jwtAuth");
-const authRouter = express.Router(); // Creating router instance
+const authRouter = express.Router();
+const jwtAuth = require("../middleware/jwtAuth.js");
 
-authRouter.post("/signup", signup);
-authRouter.post("/signin", signin);
-authRouter.get("/user", jwtAuth, getuser);
+const {
+  signUp,
+  signIn,
+  forgotPassword,
+  resetPassword,
+  getUser,
+  logout
+} = require("../controller/authController.js");
+
+authRouter.post("/signup", signUp);
+authRouter.post("/signin", signIn);
+authRouter.post("/forgotpassword", forgotPassword);
+authRouter.post("/resetpassword/:token", resetPassword);
+
+authRouter.get("/user", jwtAuth, getUser);
 authRouter.get("/logout", jwtAuth, logout);
 
 module.exports = authRouter;

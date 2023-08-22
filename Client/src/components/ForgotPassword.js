@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
   const URL = process.env.REACT_APP_URL;
   const navigate = useNavigate();
 
@@ -15,13 +15,13 @@ function ForgotPassword() {
     setLoading(true);
     try {
       const response = await axios({
-        method: "post",
-        url: URL + "/api/auth/forgotpassword",
+        method: 'post',
+        url: URL + '/api/auth/forgotpassword',
         data: { email },
       });
 
       if (response.data.success) {
-        navigate("/reset-password/" + response.data.token);
+        navigate('/reset-password/' + response.data.token);
       }
       setLoading(false);
     } catch (error) {
@@ -89,13 +89,13 @@ function ForgotPassword() {
 
         {/* signIn  */}
         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-          Go to{" "}
+          Go to{' '}
           <Link
             to="/signin"
             className="text-blue-700 hover:underline dark:text-blue-500"
           >
             Sign in
-          </Link>{" "}
+          </Link>{' '}
           page
         </div>
         {/* singIn */}

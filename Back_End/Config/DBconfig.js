@@ -1,12 +1,13 @@
-const mongoose = require("mongoose"); // Importing the mongoose dependencies
+const mongoose = require("mongoose");
+const MongoDB_URL =
+  process.env.MongoDB_URL;
 
-const MongoDB_URL = process.env.MongoDB_URL; // Getting the Mongoose_URL from .env file
-
-const dbConnect = () => {
+// mongoDb database connection
+const databaseconnect = () => {
   mongoose
-    .connect(MongoDB_URL) // BuiltIn method to Connect to the mongoose URL
-    .then((conn) => console.log(`Connected to ${conn.connection.host}`)) // Returning the text after the connection
-    .catch((e) => console.log(e.message)); // Returning if any error in connection
+    .connect(MongoDB_URL)
+    .then((conn) => console.log(`connected to DB: ${conn.connection.host}`))
+    .catch((err) => console.log(err.message));
 };
 
-module.exports = dbConnect; //Exporting the dbConnect function/methos/module
+module.exports = databaseconnect;

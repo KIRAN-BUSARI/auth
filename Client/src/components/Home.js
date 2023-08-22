@@ -21,7 +21,7 @@ function Home() {
       const response = await axios({
         method: "get",
         url: URL + "/api/auth/user",
-        withCredentials: true,
+        withCredentials: true
       });
 
       if (response.data.success) {
@@ -40,7 +40,7 @@ function Home() {
       const response = await axios({
         method: "get",
         url: URL + "/api/auth/logout",
-        withCredentials: true,
+        withCredentials: true
       });
       if (response.data.success) {
         navigate("/signin");
@@ -81,9 +81,9 @@ function Home() {
             <h2 className="text-5xl text-white">
               Hello{" "}
               <span className="  text-orange-400 font-bold">
-                {userData.name}
+                {userData.name}{" "}
               </span>
-              {" "}How are you?
+              How are you?
             </h2>
             <p className=" text-orange-400 font-bold float-right">
               {userData.email}
