@@ -19,7 +19,7 @@ app.use(
 
 app.use("/api/auth", authRouter);
 
-app.use("/", (req, res) => {
+app.use('/', (req, res) => {
   res.status(200).json({
     data: "JWTAuth Server",
   });
