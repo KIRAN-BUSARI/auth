@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const emailValidator = require("email-validator");
 
+// const Number = (0 || 1 || 2 || 3 || 4 || 5 || 6 || 7 || 8 || 9);
 
 const signUp = async (req, res, next) => {
   const { name, email, password, confirmPassword } = req.body;
@@ -11,9 +12,16 @@ const signUp = async (req, res, next) => {
   if (!name || !email || !password || !confirmPassword) {
     return res.status(400).json({
       success: false,
-      message: "Every field is required"
+      message: "Every field is required "
     });
   }
+
+  // if (name === Number) {
+  //   return res.status(501).json({
+  //     success: false,
+  //     message: "Enter characters only"
+  //   });
+  // }
 
   //validate email using npm package "email-validator"
   const validEmail = emailValidator.validate(email);
