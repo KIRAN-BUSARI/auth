@@ -1,27 +1,30 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
-function ForgotPassword() {
-  const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const URL = process.env.REACT_APP_URL;
+function ResetPassword() {
   const navigate = useNavigate();
+  const { resetPasswordToken } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState({
+    password: "",
+    confirmPassword: ""
+  });
 
-  async function handleForgotpassword(e) {
+  const URL = "http://localhost:5003";
+  async function handleResetPassword(e) {
     e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
-
     setLoading(true);
     try {
       const response = await axios({
-        method: 'post',
-        url: URL + '/api/auth/forgotpassword',
-        data: { email },
+        method: "post",
+        url: URL + "/api/auth/resetpassword/" + resetPasswordToken,
+        data: password
       });
 
       if (response.data.success) {
-        navigate('/reset-password/' + response.data.token);
+        alert(response.data.message);
+        navigate("/signin");
       }
       setLoading(false);
     } catch (error) {
@@ -32,37 +35,62 @@ function ForgotPassword() {
 
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-4">
-      <form className="space-y-6" onSubmit={(e) => handleForgotpassword(e)}>
+      <form className="space-y-6" onSubmit={(e) => handleResetPassword(e)}>
         <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-          Forgot password
+          Reset Password
         </h5>
-        {/* email  */}
+        {/* password */}
         <div>
           <label
-            htmlFor="email"
+            htmlFor="password"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Your email
+            Password
           </label>
           <input
-            type="email"
-            name="email"
-            id="email"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="••••••••"
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-            placeholder="name@company.com"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            minLength="8"
+            value={password.password}
+            onChange={(e) =>
+              setPassword({ ...password, password: e.target.value })
+            }
           />
         </div>
-        {/* email end */}
-
+        {/* password end */}
+        {/* confirm  password */}
+        <div>
+          <label
+            htmlFor="confirmPassword"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="••••••••"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            required
+            minLength="8"
+            value={password.confirmPassword}
+            onChange={(e) =>
+              setPassword({ ...password, confirmPassword: e.target.value })
+            }
+          />
+        </div>
+        {/* conform password end */}
         {/*  signIn button  */}
         <button
           type="submit"
           className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Submit
+          Reset password
           {/* loading */}
           {loading ? (
             <svg
@@ -89,13 +117,13 @@ function ForgotPassword() {
 
         {/* signIn  */}
         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-          Go to{' '}
+          Go to{" "}
           <Link
             to="/signin"
             className="text-blue-700 hover:underline dark:text-blue-500"
           >
             Sign in
-          </Link>{' '}
+          </Link>{" "}
           page
         </div>
         {/* singIn */}
@@ -104,4 +132,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default ResetPassword;

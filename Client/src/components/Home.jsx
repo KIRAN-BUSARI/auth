@@ -9,7 +9,7 @@ function Home() {
   const [userData, setUserData] = useState(false);
   const navigate = useNavigate();
 
-  const URL = process.env.REACT_APP_URL;
+  const URL = "http://localhost:5003"
 
   useEffect(() => {
     getUser();

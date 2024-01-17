@@ -1,8 +1,7 @@
-import './App.css';
+import "./App.css";
 import { Routes, Route } from 'react-router-dom';
-
 //components
-import Home from './components/Home.js';
+import Home from './components/Home';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import ResetPassword from './components/ResetPassword';

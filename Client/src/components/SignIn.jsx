@@ -7,7 +7,7 @@ function SignIn() {
 
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const URL = process.env.REACT_APP_URL;
+  const URL = "http://localhost:5003";
 
   async function handleSignIn(e) {
     e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission

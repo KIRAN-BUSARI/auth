@@ -1,29 +1,31 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-
-function ResetPassword() {
+function SignUp() {
   const navigate = useNavigate();
-  const { resetPasswordToken } = useParams();
   const [loading, setLoading] = useState(false);
-  const [password, setPassword] = useState({
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
     password: "",
     confirmPassword: ""
   });
+  const URL = "http://localhost:5003";
 
-  const URL = process.env.REACT_APP_URL;
-  async function handleResetPassword(e) {
+  async function handleSignUp(e) {
     e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
+
     setLoading(true);
     try {
       const response = await axios({
         method: "post",
-        url: URL + "/api/auth/resetpassword/" + resetPasswordToken,
-        data: password
+        url: URL + "/api/auth/signup",
+        withCredentials: true,
+        data: userData
       });
 
+      // the withCredentials property to 'true'. This tells the browser to include any cookies associated with the current domain in the request.
       if (response.data.success) {
-        alert(response.data.message);
         navigate("/signin");
       }
       setLoading(false);
@@ -35,63 +37,105 @@ function ResetPassword() {
 
   return (
     <div className="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700 m-4">
-      <form className="space-y-6" onSubmit={(e) => handleResetPassword(e)}>
+      <form className="space-y-6" onSubmit={(e) => handleSignUp(e)}>
         <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-          Reset Password
+          SignUp to our platform
         </h5>
+
+        {/* email  */}
+        <div className="mb-6">
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Your Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            placeholder="user name"
+            required
+            value={userData.name}
+            onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+          />
+        </div>
+        {/* email end */}
+
+        {/* email  */}
+        <div className="mb-6">
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Your email
+          </label>
+          <input
+            type="email"
+            id="email"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            placeholder="name@company.com"
+            required
+            value={userData.email}
+            onChange={(e) =>
+              setUserData({ ...userData, email: e.target.value })
+            }
+          />
+        </div>
+        {/* email end */}
+
         {/* password */}
-        <div>
+        <div className="mb-6">
           <label
             htmlFor="password"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Password
+            Your password
           </label>
           <input
             type="password"
-            name="password"
             id="password"
-            placeholder="••••••••"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-            required
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             minLength="8"
-            value={password.password}
+            placeholder="••••••••"
+            required
+            value={userData.password}
             onChange={(e) =>
-              setPassword({ ...password, password: e.target.value })
+              setUserData({ ...userData, password: e.target.value })
             }
           />
         </div>
         {/* password end */}
-        {/* confirm  password */}
-        <div>
+
+        {/* conform password */}
+        <div className="mb-6">
           <label
             htmlFor="confirmPassword"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
-            Confirm Password
+            Confirm password
           </label>
           <input
             type="password"
-            name="confirmPassword"
             id="confirmPassword"
-            placeholder="••••••••"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-            required
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             minLength="8"
-            value={password.confirmPassword}
+            placeholder="••••••••"
+            required
+            value={userData.confirmPassword}
             onChange={(e) =>
-              setPassword({ ...password, confirmPassword: e.target.value })
+              setUserData({ ...userData, confirmPassword: e.target.value })
             }
           />
         </div>
         {/* conform password end */}
-        {/*  signIn button  */}
+
+        {/*  signUp button */}
         <button
           type="submit"
           className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
-          Reset password
-          {/* loading */}
+          Register new account
           {loading ? (
             <svg
               aria-hidden="true"
@@ -111,25 +155,23 @@ function ResetPassword() {
               />
             </svg>
           ) : null}
-          {/* loading end */}
         </button>
-        {/* signIn button end */}
+        {/* signUp button end */}
 
-        {/* signIn  */}
+        {/* create account(signup) */}
         <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
-          Go to{" "}
+          Alerady have an account?{" "}
           <Link
             to="/signin"
             className="text-blue-700 hover:underline dark:text-blue-500"
           >
-            Sign in
-          </Link>{" "}
-          page
+            Sign In
+          </Link>
         </div>
-        {/* singIn */}
+        {/* create account(signup) end */}
       </form>
     </div>
   );
 }
 
-export default ResetPassword;
+export default SignUp;
