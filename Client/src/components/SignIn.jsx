@@ -7,7 +7,7 @@ function SignIn() {
 
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const URL = "http://localhost:5003";
+  const URL = "http://localhost:5003/api/auth";
 
   async function handleSignIn(e) {
     e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
@@ -15,7 +15,7 @@ function SignIn() {
     try {
       const response = await axios({
         method: "post",
-        url: URL + "/api/auth/signin",
+        url: URL + "/signin",
         withCredentials: true,
         data: credentials
       });

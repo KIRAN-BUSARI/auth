@@ -11,14 +11,14 @@ function ResetPassword() {
     confirmPassword: ""
   });
 
-  const URL = "http://localhost:5003";
+  const URL = "http://localhost:5003/api/auth";
   async function handleResetPassword(e) {
     e.preventDefault(); // event.preventDefault() method to prevent the default behavior of an HTML form submission
     setLoading(true);
     try {
       const response = await axios({
         method: "post",
-        url: URL + "/api/auth/resetpassword/" + resetPasswordToken,
+        url: URL + "/resetpassword/" + resetPasswordToken,
         data: password
       });
 

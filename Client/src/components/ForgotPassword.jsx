@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
-  const URL = "http://localhost:5003";
+  const URL = "http://localhost:5003/api/auth";
   const navigate = useNavigate();
 
   async function handleForgotpassword(e) {
@@ -16,7 +16,7 @@ function ForgotPassword() {
     try {
       const response = await axios({
         method: 'post',
-        url: URL + '/api/auth/forgotpassword',
+        url: URL + '/forgotpassword',
         data: { email },
       });
 

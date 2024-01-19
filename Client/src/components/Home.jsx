@@ -9,7 +9,7 @@ function Home() {
   const [userData, setUserData] = useState(false);
   const navigate = useNavigate();
 
-  const URL = "http://localhost:5003"
+  const URL = "http://localhost:5003/api/auth"
 
   useEffect(() => {
     getUser();
@@ -21,7 +21,7 @@ function Home() {
       setLoading(false);
       const response = await axios({
         method: "get",
-        url: URL + "/api/auth/user",
+        url: URL + "/user",
         withCredentials: true
       });
 
@@ -40,7 +40,7 @@ function Home() {
     try {
       const response = await axios({
         method: "get",
-        url: URL + "/api/auth/logout",
+        url: URL + "/logout",
         withCredentials: true
       });
       if (response.data.success) {
